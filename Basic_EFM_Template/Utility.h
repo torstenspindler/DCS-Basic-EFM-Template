@@ -60,6 +60,7 @@ inline double rescale(double input, double min, double max)
 		return input * fabs(max);
 	if (input < 0.0)
 		return input * fabs(min);
+    return 0.0;
 };
 
 // 3D vector structure,
@@ -159,7 +160,7 @@ inline double lerp(double* x, double* f, unsigned sz, double t)
 */
 
 // Linear interpolation smoothing function
-double smooth_lerp(double current, double target, double t)
+inline double smooth_lerp(double current, double target, double t)
 {
 	return current + (target - current) * t;
 };

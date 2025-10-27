@@ -12,23 +12,30 @@ public:
 
 		void* getParamHandle(const char* name)
 		{
-			return ed_param_api.pfn_ed_cockpit_get_parameter_handle(name);
+			if (ed_param_api.pfn_ed_cockpit_get_parameter_handle)
+				return ed_param_api.pfn_ed_cockpit_get_parameter_handle(name);
+			return nullptr;
 		}
 
 		void setParamNumber(void* handle, double value)
 		{
-			ed_param_api.pfn_ed_cockpit_update_parameter_with_number(handle, value);
+			if (ed_param_api.pfn_ed_cockpit_update_parameter_with_number && handle)
+				ed_param_api.pfn_ed_cockpit_update_parameter_with_number(handle, value);
 		}
 
 		void setParamString(void* handle, const char* string)
 		{
-			ed_param_api.pfn_ed_cockpit_update_parameter_with_string(handle, string);
+			if (ed_param_api.pfn_ed_cockpit_update_parameter_with_string && handle)
+				ed_param_api.pfn_ed_cockpit_update_parameter_with_string(handle, string);
 		}
 
 		double getParamNumber(void* handle)
 		{
 			double res = 0;
-			ed_param_api.pfn_ed_cockpit_parameter_value_to_number(handle, res, false);
+			if (ed_param_api.pfn_ed_cockpit_parameter_value_to_number && handle)
+			{
+				ed_param_api.pfn_ed_cockpit_parameter_value_to_number(handle, res, false);
+			}
 			return res;
 		}
 
@@ -43,12 +50,21 @@ public:
 
 		inline void getParamString(void* ptr, char* buffer, unsigned int bufferSize) const
 		{
-			ed_param_api.pfn_ed_cockpit_parameter_value_to_string(ptr, buffer, bufferSize);
+			if (ed_param_api.pfn_ed_cockpit_parameter_value_to_string && ptr)
+			{
+				ed_param_api.pfn_ed_cockpit_parameter_value_to_string(ptr, buffer, bufferSize);
+			}
+			else if (buffer && bufferSize)
+			{
+				buffer[0] = '\0';
+			}
 		}
 
 		int compareParams(void* handle1, void* handle2)
 		{
-			return ed_param_api.pfn_ed_cockpit_compare_parameters(handle1, handle2);
+			if (ed_param_api.pfn_ed_cockpit_compare_parameters)
+				return ed_param_api.pfn_ed_cockpit_compare_parameters(handle1, handle2);
+			return 0;
 		}
 };
 

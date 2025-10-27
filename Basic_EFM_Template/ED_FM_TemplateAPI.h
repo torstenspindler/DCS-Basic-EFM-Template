@@ -7,8 +7,13 @@
 
 #pragma once
 
-#ifdef ED_FM_TEMPLATE_EXPORTS
-#define ED_FM_TEMPLATE_API __declspec(dllexport)
+#ifdef _WIN32
+  #ifdef ED_FM_TEMPLATE_EXPORTS
+    #define ED_FM_TEMPLATE_API __declspec(dllexport)
+  #else
+    #define ED_FM_TEMPLATE_API __declspec(dllimport)
+  #endif
 #else
-#define ED_FM_TEMPLATE_API __declspec(dllimport)
+  // On non-Windows platforms no special import/export decoration is needed
+  #define ED_FM_TEMPLATE_API
 #endif

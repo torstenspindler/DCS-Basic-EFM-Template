@@ -1,5 +1,6 @@
 #pragma once
 #include "wHumanCustomPhysicsAPI.h"
+#include "../../ED_FM_TemplateAPI.h"
 
 #ifdef FM_EXPORTS
 #define FM_API __declspec(dllexport)

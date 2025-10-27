@@ -3,7 +3,7 @@
 #include "stdafx.h"
 #include "Basic_EFM_Template.h"
 #include "Utility.h"
-#include <Math.h>
+#include <math.h>
 #include <stdio.h>
 #include <string>
 #include "Inputs.h"
@@ -519,8 +519,8 @@ void ed_fm_simulate(double dt)
 
 	if (left_engine_switch == true && left_engine_power_readout >= 0.5)
 	{
-		left_throttle_output = limit(lerp(FM_DATA::throttle_input_table, FM_DATA::engine_power_table, sizeof(FM_DATA::throttle_input_table) / sizeof(float), left_throttle_input), 0.1, 1);
-		left_engine_power_readout = limit(lerp(FM_DATA::throttle_input_table, FM_DATA::engine_power_readout_table, sizeof(FM_DATA::throttle_input_table) / sizeof(float), left_throttle_input), 0, 1);
+        left_throttle_output = limit(lerp(FM_DATA::throttle_input_table, FM_DATA::engine_power_table, sizeof(FM_DATA::throttle_input_table) / sizeof(FM_DATA::throttle_input_table[0]), left_throttle_input), 0.1, 1);
+        left_engine_power_readout = limit(lerp(FM_DATA::throttle_input_table, FM_DATA::engine_power_readout_table, sizeof(FM_DATA::throttle_input_table) / sizeof(FM_DATA::throttle_input_table[0]), left_throttle_input), 0, 1);
 	};
 
 	// Right engine
@@ -539,8 +539,8 @@ void ed_fm_simulate(double dt)
 
 	if (right_engine_switch == true && right_engine_power_readout >= 0.5)
 	{
-		right_throttle_output = limit(lerp(FM_DATA::throttle_input_table, FM_DATA::engine_power_table, sizeof(FM_DATA::throttle_input_table) / sizeof(float), right_throttle_input), 0.1, 1);
-		right_engine_power_readout = limit(lerp(FM_DATA::throttle_input_table, FM_DATA::engine_power_readout_table, sizeof(FM_DATA::throttle_input_table) / sizeof(float), right_throttle_input), 0, 1);
+        right_throttle_output = limit(lerp(FM_DATA::throttle_input_table, FM_DATA::engine_power_table, sizeof(FM_DATA::throttle_input_table) / sizeof(FM_DATA::throttle_input_table[0]), right_throttle_input), 0.1, 1);
+        right_engine_power_readout = limit(lerp(FM_DATA::throttle_input_table, FM_DATA::engine_power_readout_table, sizeof(FM_DATA::throttle_input_table) / sizeof(FM_DATA::throttle_input_table[0]), right_throttle_input), 0, 1);
 	};
 
 	left_thrust_force = left_throttle_output * max_dry_thrust * engine_alt_effect * left_engine_integrity * 0.5;
