@@ -2,6 +2,7 @@
 /workspace/build/CMakeFiles/edit_cache.dir
 /workspace/build/CMakeFiles/rebuild_cache.dir
 /workspace/build/tests/CMakeFiles/unit_tests.dir
+/workspace/build/tests/CMakeFiles/api_tests.dir
 /workspace/build/tests/CMakeFiles/test.dir
 /workspace/build/tests/CMakeFiles/edit_cache.dir
 /workspace/build/tests/CMakeFiles/rebuild_cache.dir

@@ -260,5 +260,7 @@ tests/unit_tests
  /usr/lib/gcc/x86_64-linux-gnu/14/libgcc_s.so
  /usr/lib/gcc/x86_64-linux-gnu/14/libstdc++.so
  /usr/lib/x86_64-linux-gnu/libc_nonshared.a
+ /workspace/build/tests/CMakeFiles/unit_tests.dir/__/Basic_EFM_Template/Basic_EFM_Template.cpp.o
+ /workspace/build/tests/CMakeFiles/unit_tests.dir/test_api.cpp.o
  /workspace/build/tests/CMakeFiles/unit_tests.dir/test_utility.cpp.o
 

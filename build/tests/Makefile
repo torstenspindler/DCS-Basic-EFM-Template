@@ -140,6 +140,68 @@ unit_tests/fast:
 	cd /workspace/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/unit_tests.dir/build.make tests/CMakeFiles/unit_tests.dir/build
 .PHONY : unit_tests/fast
 
+# Convenience name for target.
+tests/CMakeFiles/api_tests.dir/rule:
+	cd /workspace/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 tests/CMakeFiles/api_tests.dir/rule
+.PHONY : tests/CMakeFiles/api_tests.dir/rule
+
+# Convenience name for target.
+api_tests: tests/CMakeFiles/api_tests.dir/rule
+.PHONY : api_tests
+
+# fast build rule for target.
+api_tests/fast:
+	cd /workspace/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/api_tests.dir/build.make tests/CMakeFiles/api_tests.dir/build
+.PHONY : api_tests/fast
+
+__/Basic_EFM_Template/Basic_EFM_Template.o: __/Basic_EFM_Template/Basic_EFM_Template.cpp.o
+.PHONY : __/Basic_EFM_Template/Basic_EFM_Template.o
+
+# target to build an object file
+__/Basic_EFM_Template/Basic_EFM_Template.cpp.o:
+	cd /workspace/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/api_tests.dir/build.make tests/CMakeFiles/api_tests.dir/__/Basic_EFM_Template/Basic_EFM_Template.cpp.o
+.PHONY : __/Basic_EFM_Template/Basic_EFM_Template.cpp.o
+
+__/Basic_EFM_Template/Basic_EFM_Template.i: __/Basic_EFM_Template/Basic_EFM_Template.cpp.i
+.PHONY : __/Basic_EFM_Template/Basic_EFM_Template.i
+
+# target to preprocess a source file
+__/Basic_EFM_Template/Basic_EFM_Template.cpp.i:
+	cd /workspace/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/api_tests.dir/build.make tests/CMakeFiles/api_tests.dir/__/Basic_EFM_Template/Basic_EFM_Template.cpp.i
+.PHONY : __/Basic_EFM_Template/Basic_EFM_Template.cpp.i
+
+__/Basic_EFM_Template/Basic_EFM_Template.s: __/Basic_EFM_Template/Basic_EFM_Template.cpp.s
+.PHONY : __/Basic_EFM_Template/Basic_EFM_Template.s
+
+# target to generate assembly for a file
+__/Basic_EFM_Template/Basic_EFM_Template.cpp.s:
+	cd /workspace/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/api_tests.dir/build.make tests/CMakeFiles/api_tests.dir/__/Basic_EFM_Template/Basic_EFM_Template.cpp.s
+.PHONY : __/Basic_EFM_Template/Basic_EFM_Template.cpp.s
+
+test_api.o: test_api.cpp.o
+.PHONY : test_api.o
+
+# target to build an object file
+test_api.cpp.o:
+	cd /workspace/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/api_tests.dir/build.make tests/CMakeFiles/api_tests.dir/test_api.cpp.o
+.PHONY : test_api.cpp.o
+
+test_api.i: test_api.cpp.i
+.PHONY : test_api.i
+
+# target to preprocess a source file
+test_api.cpp.i:
+	cd /workspace/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/api_tests.dir/build.make tests/CMakeFiles/api_tests.dir/test_api.cpp.i
+.PHONY : test_api.cpp.i
+
+test_api.s: test_api.cpp.s
+.PHONY : test_api.s
+
+# target to generate assembly for a file
+test_api.cpp.s:
+	cd /workspace/build && $(MAKE) $(MAKESILENT) -f tests/CMakeFiles/api_tests.dir/build.make tests/CMakeFiles/api_tests.dir/test_api.cpp.s
+.PHONY : test_api.cpp.s
+
 test_utility.o: test_utility.cpp.o
 .PHONY : test_utility.o
 
@@ -173,7 +235,14 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... api_tests"
 	@echo "... unit_tests"
+	@echo "... __/Basic_EFM_Template/Basic_EFM_Template.o"
+	@echo "... __/Basic_EFM_Template/Basic_EFM_Template.i"
+	@echo "... __/Basic_EFM_Template/Basic_EFM_Template.s"
+	@echo "... test_api.o"
+	@echo "... test_api.i"
+	@echo "... test_api.s"
 	@echo "... test_utility.o"
 	@echo "... test_utility.i"
 	@echo "... test_utility.s"

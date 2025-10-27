@@ -139,6 +139,19 @@ unit_tests/fast:
 	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/unit_tests.dir/build.make tests/CMakeFiles/unit_tests.dir/build
 .PHONY : unit_tests/fast
 
+#=============================================================================
+# Target rules for targets named api_tests
+
+# Build rule for target.
+api_tests: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 api_tests
+.PHONY : api_tests
+
+# fast build rule for target.
+api_tests/fast:
+	$(MAKE) $(MAKESILENT) -f tests/CMakeFiles/api_tests.dir/build.make tests/CMakeFiles/api_tests.dir/build
+.PHONY : api_tests/fast
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -148,6 +161,7 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... test"
+	@echo "... api_tests"
 	@echo "... unit_tests"
 .PHONY : help
 
