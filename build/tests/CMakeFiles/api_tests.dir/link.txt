@@ -1,1 +1,0 @@
-/usr/bin/c++ -Xlinker --dependency-file=CMakeFiles/api_tests.dir/link.d CMakeFiles/api_tests.dir/test_api.cpp.o CMakeFiles/api_tests.dir/__/Basic_EFM_Template/Basic_EFM_Template.cpp.o -o api_tests

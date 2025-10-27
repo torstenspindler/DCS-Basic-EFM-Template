@@ -1,0 +1,25 @@
+# Build and cache artifacts
+build/
+core
+**/core
+CMakeCache.txt
+CMakeFiles/
+Testing/
+*.o
+*.obj
+*.d
+*.pch
+*.pdb
+*.dll
+*.exe
+*.lib
+*.so
+*.dylib
+*.a
+*.lo
+*.la
+*.class
+*.log
+*.tmp
+*.swp
+*.DS_Store
