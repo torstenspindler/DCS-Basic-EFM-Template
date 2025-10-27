@@ -1,0 +1,19 @@
+Start testing: Oct 27 10:17 UTC
+----------------------------------------------------------
+1/1 Testing: unit_tests
+1/1 Test: unit_tests
+Command: "/workspace/build/tests/unit_tests"
+Directory: /workspace/build/tests
+"unit_tests" start time: Oct 27 10:17 UTC
+Output:
+----------------------------------------------------------
+All Utility.h tests passed
+<end of output>
+Test time =   0.00 sec
+----------------------------------------------------------
+Test Passed.
+"unit_tests" end time: Oct 27 10:17 UTC
+"unit_tests" time elapsed: 00:00:00
+----------------------------------------------------------
+
+End testing: Oct 27 10:17 UTC
