@@ -1,4 +1,7 @@
-import cmath
+from mpmath import mp, mpc, mpf, sqrt as mp_sqrt, exp as mp_exp, pi as mp_pi, atan2 as mp_atan2
+
+# Set precision high enough for large numbers
+mp.dps = 50  # decimal places
 
 def cardano_formula(a, b, c, d):
     """
@@ -13,6 +16,9 @@ def cardano_formula(a, b, c, d):
     if a == 0:
         raise ValueError("Coefficient 'a' cannot be zero for a cubic equation")
     
+    # Convert to mpmath types for high precision
+    a, b, c, d = mpf(a), mpf(b), mpf(c), mpf(d)
+    
     # Normalize the equation by dividing by a
     b, c, d = b/a, c/a, d/a
     
@@ -24,31 +30,42 @@ def cardano_formula(a, b, c, d):
     # Calculate discriminant
     delta = q**2/4 + p**3/27
     
-    # Calculate the cube roots more carefully
-    # We need to use a proper cube root function for complex numbers
+    # Calculate the cube roots using mpmath
     def complex_cube_root(z):
         """Calculate the principal cube root of a complex number"""
         if z == 0:
-            return 0
+            return mpc(0, 0)
+        
+        # Convert to mpmath complex if needed
+        if not isinstance(z, mpc):
+            z = mpc(z)
+        
+        # Use polar form: z = r * e^(i*theta)
         r = abs(z)
-        theta = cmath.phase(z)
-        cube_root_r = r ** (1/3)
+        theta = mp_atan2(z.imag, z.real)
+        
+        # Cube root: z^(1/3) = r^(1/3) * e^(i*theta/3)
+        cube_root_r = r ** (mpf(1)/mpf(3))
         cube_root_theta = theta / 3
-        return cube_root_r * cmath.exp(1j * cube_root_theta)
+        
+        return cube_root_r * mp_exp(mpc(0, 1) * cube_root_theta)
+    
+    # Calculate square root
+    sqrt_delta = mp_sqrt(delta)
     
     # Calculate u using the principal cube root
-    u = complex_cube_root(-q/2 + cmath.sqrt(delta))
+    u = complex_cube_root(-q/2 + sqrt_delta)
     
     # Calculate v using the constraint u*v = -p/3
     if abs(u) > 1e-10:
         v = -p / (3 * u)
     else:
         # If u is very small, calculate v directly
-        v = complex_cube_root(-q/2 - cmath.sqrt(delta))
+        v = complex_cube_root(-q/2 - sqrt_delta)
     
     # Complex cube roots of unity
-    omega = complex(-1/2, cmath.sqrt(3)/2)
-    omega2 = complex(-1/2, -cmath.sqrt(3)/2)
+    omega = mpc(-1, mp_sqrt(mpf(3))) / 2
+    omega2 = mpc(-1, -mp_sqrt(mpf(3))) / 2
     
     # Three roots of depressed cubic
     t1 = u + v
@@ -62,10 +79,9 @@ def cardano_formula(a, b, c, d):
     x3 = t3 - shift
     
     # Round to clean up floating point errors
-    # Only round to integers if the values are very close to integers
-    def clean_root(root, tolerance=1e-9):
-        real = root.real
-        imag = root.imag
+    def clean_root(root, tolerance=1e-6):
+        real = float(root.real)
+        imag = float(root.imag)
         
         # Check if close to an integer
         if abs(real - round(real)) < tolerance:
@@ -134,8 +150,12 @@ if __name__ == "__main__":
     
     print("\n" + "="*50 + "\n")
     
-    # Example 4: Large coefficients (adjusted from original example 2)
+    # Example 4: Large coefficients
     print("Example 4: Large coefficients")
-    a, b, c, d = 1, -90241940450, 10125996102586212012093, -495773079457841151858151341690006
+    print("Expected roots: -1831912200±37614515196i, 57715266291")
+    a = 1
+    b = -54051441891
+    c = 1206749054849160314880
+    d = -81852232506889517992956183707648
     result = cardano_formula(a, b, c, d)
     print(result)
