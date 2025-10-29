@@ -81,38 +81,17 @@ def cardano_formula(a, b, c, d):
     x2 = t2 - shift
     x3 = t3 - shift
     
-    # Round to clean up floating point errors
-    def clean_root(root):
-        real = root.real
-        imag = root.imag
-        
-        # Calculate relative tolerance based on magnitude
-        real_mag = abs(real) if real != 0 else 1
-        imag_mag = abs(imag) if imag != 0 else 1
-        
-        real_tolerance = max(1e-6, real_mag * 1e-9)
-        imag_tolerance = max(1e-6, imag_mag * 1e-9)
-        
-        # Check if close to an integer
-        if abs(real - round(real)) < real_tolerance:
-            real = round(real)
-        if abs(imag - round(imag)) < imag_tolerance:
-            imag = round(imag)
-        
-        return complex(real, imag)
-    
-    roots = [clean_root(x1), clean_root(x2), clean_root(x3)]
+    # Round to integers (assuming results are always integers)
+    roots = [
+        complex(round(x1.real), round(x1.imag)),
+        complex(round(x2.real), round(x2.imag)),
+        complex(round(x3.real), round(x3.imag))
+    ]
     
     # Format as strings
     def format_complex(num):
-        real = num.real
-        imag = num.imag
-        
-        # Convert to int if they are whole numbers
-        if real == int(real):
-            real = int(real)
-        if imag == int(imag):
-            imag = int(imag)
+        real = int(num.real)
+        imag = int(num.imag)
         
         if imag >= 0:
             return f"{real}+{imag}i"
