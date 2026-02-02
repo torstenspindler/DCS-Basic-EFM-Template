@@ -10,8 +10,9 @@ import (
 )
 
 const (
-	defaultSearch  = "Vietnam Assets Pack by EightBall & Tobi"
-	defaultReplace = "[VWV] Vietnam Assets Pack"
+	defaultSearch      = "Vietnam Assets Pack by EightBall & Tobi"
+	defaultReplace     = "[VWV] Vietnam Assets Pack"
+	requiredModulesKey = "requiredModules"
 )
 
 func usage() {
@@ -152,15 +153,14 @@ func main() {
 }
 
 func findRequiredModulesTable(data []byte) (int, int, bool) {
-	key := []byte("requiredModules")
 	for i := 0; i < len(data); {
 		if next, skipped := skipNonCode(data, i); skipped {
 			i = next
 			continue
 		}
 
-		if isKeyAt(data, i, key) {
-			j := i + len(key)
+		if next, ok := matchRequiredModulesKey(data, i); ok {
+			j := next
 			j = skipSpaceAndComments(data, j)
 			if j < len(data) && data[j] == '=' {
 				j++
@@ -180,6 +180,44 @@ func findRequiredModulesTable(data []byte) (int, int, bool) {
 	return 0, 0, false
 }
 
+func matchRequiredModulesKey(data []byte, i int) (int, bool) {
+	if isKeyAt(data, i, []byte(requiredModulesKey)) {
+		return i + len(requiredModulesKey), true
+	}
+
+	if i >= len(data) || data[i] != '[' {
+		return 0, false
+	}
+
+	j := skipSpaces(data, i+1)
+	if j >= len(data) {
+		return 0, false
+	}
+
+	if data[j] == '"' || data[j] == '\'' {
+		value, next, ok := readShortStringValue(data, j)
+		if ok && value == requiredModulesKey {
+			k := skipSpaces(data, next)
+			if k < len(data) && data[k] == ']' {
+				return k + 1, true
+			}
+		}
+		return 0, false
+	}
+
+	if data[j] == '[' {
+		value, next, ok := readLongBracketValue(data, j)
+		if ok && value == requiredModulesKey {
+			k := skipSpaces(data, next)
+			if k < len(data) && data[k] == ']' {
+				return k + 1, true
+			}
+		}
+	}
+
+	return 0, false
+}
+
 func isKeyAt(data []byte, i int, key []byte) bool {
 	if i+len(key) > len(data) {
 		return false
@@ -194,6 +232,17 @@ func isKeyAt(data []byte, i int, key []byte) bool {
 		return false
 	}
 	return true
+}
+
+func skipSpaces(data []byte, i int) int {
+	for i < len(data) && isSpace(data[i]) {
+		i++
+	}
+	return i
+}
+
+func isSpace(b byte) bool {
+	return b == ' ' || b == '\t' || b == '\n' || b == '\r'
 }
 
 func isIdentChar(b byte) bool {
@@ -266,11 +315,48 @@ func skipShortString(data []byte, i int, quote byte) int {
 	return len(data)
 }
 
+func readShortStringValue(data []byte, i int) (string, int, bool) {
+	quote := data[i]
+	i++
+	var buf bytes.Buffer
+	for i < len(data) {
+		if data[i] == '\\' && i+1 < len(data) {
+			i++
+			buf.WriteByte(data[i])
+			i++
+			continue
+		}
+		if data[i] == quote {
+			return buf.String(), i + 1, true
+		}
+		buf.WriteByte(data[i])
+		i++
+	}
+	return "", len(data), false
+}
+
 func skipLineComment(data []byte, i int) int {
 	for i < len(data) && data[i] != '\n' {
 		i++
 	}
 	return i
+}
+
+func readLongBracketValue(data []byte, i int) (string, int, bool) {
+	eqCount, ok := matchLongBracketStart(data, i)
+	if !ok {
+		return "", i, false
+	}
+
+	start := i + 2 + eqCount
+	j := start
+	for j < len(data) {
+		if data[j] == ']' && matchLongBracketEnd(data, j, eqCount) {
+			return string(data[start:j]), j + 2 + eqCount, true
+		}
+		j++
+	}
+	return "", len(data), false
 }
 
 func skipLongComment(data []byte, i int) (int, bool) {
